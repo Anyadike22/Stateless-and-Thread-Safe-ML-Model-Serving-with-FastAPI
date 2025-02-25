@@ -6,8 +6,28 @@
 
 
 
-```
-python
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```python
 from fastapi import FastAPI, Depends
 from functools import lru_cache
 import pickle
@@ -52,4 +72,12 @@ async def predict_endpoint(
     processed_data = predictor.preprocess(data)
     prediction = predictor.predict(processed_data)
     return {"prediction": prediction}
-    ```
+```
+
+
+
+
+
+
+
+    
