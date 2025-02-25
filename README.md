@@ -34,14 +34,7 @@ Reusing a single loaded model across threads reduces memory overhead and speeds 
 ## Production Readiness:
 
 
-Stateless-and-Thread-Safe-ML-Model-Serving-with-FastAPI helps meeting requirements for high availability, low latency, and fault tolerance in real-world deployments.
-
-
-
-
-
-
-
+Below is an example of Stateless and Thread Safe ML Model Serving with FastAPI which helps meet requirements for high availability, low latency, and fault tolerance in real-world deployments.
 
 
 
