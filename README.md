@@ -1,8 +1,8 @@
 # Stateless-and-Thread-Safe-ML-Model-Serving-with-FastAPI
 
-Here’s the explanation formatted with proper code blocks for GitHub README using triple backticks and Python syntax highlighting:
+## 1. Imports & FastAPI Initialization
 
-1. Imports & FastAPI Initialization
+```
 python
 Copy
 from fastapi import FastAPI, Depends
@@ -19,10 +19,13 @@ lru_cache: Caches the model loader function's result (loaded only once)
 pickle: Loads the serialized ML model
 
 app = FastAPI(): Creates the ASGI application instance (async-capable)
+```
 
-2. Stateless ModelPredictor Class
+## 2. Stateless ModelPredictor Class
+
+```
 python
-Copy
+
 class ModelPredictor:
     def __init__(self, model):
         self.model = model  # Immutable after initialization
@@ -32,6 +35,7 @@ class ModelPredictor:
 
     def predict(self, processed_data: list) -> float:
         return self.model.predict([processed_data])[0]
+```
 Immutable Model: The model is injected at initialization and never modified
 
 Stateless Methods:
@@ -42,15 +46,19 @@ predict(): Uses only the immutable model and input arguments
 
 Thread-Safety: No shared mutable state between requests
 
-3. Dependency Injection with Caching
+
+## 3. Dependency Injection with Caching
+
+```
 python
-Copy
+
 @lru_cache
 def load_model():
     with open("model_v1.pkl", "rb") as f:
         model = pickle.load(f)
     return ModelPredictor(model)
 @lru_cache: Ensures the model is loaded only once at startup
+```
 
 Thread-Safe Loading: Pickle loading happens once, before any requests
 
@@ -58,9 +66,10 @@ Singleton Pattern: All requests share the same ModelPredictor instance
 
 Cold Start Optimization: No model reload delays during requests
 
-4. FastAPI Endpoint
+
+## 4. FastAPI Endpoint
+```
 python
-Copy
 @app.post("/predict")
 async def predict_endpoint(
     data: dict, 
@@ -70,6 +79,7 @@ async def predict_endpoint(
     prediction = predictor.predict(processed_data)
     return {"prediction": prediction}
 Dependency Injection: Depends(load_model) injects the cached model
+```
 
 Async Capable: FastAPI handles concurrent requests efficiently
 
